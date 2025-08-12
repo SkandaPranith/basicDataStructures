@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+	int data;
+	struct node* next;
+};
+
+struct node* createnode(int data) {
+	struct node* newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->data = data;
+	newnode->next = NULL;
+	return newnode;
+}
+
+void enqueue(struct node** head, int data) {
+	//Queue at end in LL
+	struct node* newnode = createnode(data);
+	if (*head == NULL) {
+		*head = newnode;
+		cout << "Succesfully Enqueued " << newnode->data << " into queue\n";
+		return;
+	}
+
+	struct node* temp = *head;
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+
+	temp->next = newnode;
+	cout << "Succesfully Enqueued " << newnode->data << " into queue\n";
+}
+
+void dequeue(struct node** head) {
+	//Delete from start in LL
+	
+	if (*head == NULL) {
+		cout << "Linked List is Empty.\n";
+		return;
+	}
+
+	struct node* temp = *head;
+	if (temp->next == NULL) {
+		free(temp);
+		*head = NULL;// Only 1 element in LL
+		return;
+	}
+
+	*head = (*head)->next;
+	free(temp); 
+}
+
+void peek(struct node* head) {
+	struct node* temp = head;
+	if (head == NULL) {
+		cout << "Queue is empty.\n";
+		return;
+	}
+
+	cout << "Element to be Dequeued is: " << temp->data << endl;
+}
+
+void display(struct node* head) {
+	struct node* temp = head;
+	while (temp != NULL) {
+		cout << temp->data << " ";
+		temp = temp->next;
+	}
+	cout << endl;
+}
+int main() {
+	struct node* head = NULL;
+	int choice, data;
+	while (choice != 5) {
+
+		cout << "1-Enqueue, 2-Dequeue, 3-Peek, 4-Display, 5-Exit\n";
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+			cout << "Data: ";
+			cin >> data;
+			enqueue(&head, data);
+			break;
+
+		case 2:
+			dequeue(&head);
+			break;
+
+		case 3:
+			peek(head);
+			break;
+
+		case 4:
+			display(head);
+			break;
+
+		case 5:
+			return 0;
+
+		default:
+			cout << "Invalid";
+
+		}
+	}
+}
