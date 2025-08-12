@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+int top=-1;
+ 
+void push (int stack[], int n, int data) {
+     if (top >= n - 1) {
+        cout << "Stack overflow!\n";
+        return;
+    }
+    
+    top++;
+    stack[top]=data;
+    cout << "Pushed: " << stack[top] << endl;
+}
+
+void pop (int stack[]) {
+    if (top==-1) {
+        printf("Stack underflow!\n");
+        return;
+    }
+    
+    cout << "Popped: "<< stack[top] << endl;
+    top--;
+}
+
+void peek(int stack[]) {
+    if (top < 0) {
+        cout << "Stack is empty!\n";
+        return;
+    }
+    cout << "Top element: " << stack[top] << "\n";
+}
+
+void display(int stack[]) {
+    if (top < 0) {
+        cout << "Stack is empty!\n";
+        return;
+    }
+    cout << "Stack elements (top to bottom):\n";
+    for (int i = top; i >= 0; i--) {
+        cout << stack[i] << "\n";
+    }
+}
+
+int main() {
+    int choice, n, data;
+    
+    cout << "Enter stack size: ";
+    cin >> n;
+
+    int stack[n];
+
+    while (choice!=5) {
+        cout << "\n--- Stack Menu ---\n";
+        cout << "1. Push\n";
+        cout << "2. Pop\n";
+        cout << "3. Peek\n";
+        cout << "4. Display\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value: ";
+                cin >> data;
+                push(stack, n, data);
+                break;
+            case 2:
+                pop(stack);
+                break;
+            case 3:
+                peek(stack);
+                break;
+            case 4:
+                display(stack);
+                break;
+            case 5:
+                return 0;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    }
+}
