@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+
+int front = -1, rear = -1;
+
+void enqueue(int q[], int n, int data) {
+    if (rear == n - 1) { 
+        cout << "Queue is full!\n";
+        return;
+    }
+    if (front == -1 && rear == -1) {  
+        front = rear = 0;
+    } else {
+        rear++;
+    }
+    q[rear] = data;
+    cout << "Enqueued: " << q[rear] << endl;
+}
+
+void dequeue(int q[]) {
+    if (front == -1 || front > rear) {
+        cout << "Queue is empty!\n";
+        return;
+    }
+    cout << "Dequeued: " << q[front] << endl;
+    front++;
+    if (front > rear) { 
+        front = rear = -1;
+    }
+}
+
+void peek(int q[]) {
+    if (front == -1 || front > rear) {
+        cout << "Empty Queue.\n";
+        return;
+    }
+    cout << "Element to be dequeued: " << q[front] << endl;
+}
+
+void display(int q[]) {
+    if (front == -1 || front > rear) {
+        cout << "Empty Queue.\n";
+        return;
+    }
+    cout << "Elements in Queue are: ";
+    for (int i = front; i <= rear; i++) {
+        cout << q[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int data, choice = 0, n;
+    cout << "No. of elements: ";
+    cin >> n;
+    int q[n];
+
+    while (choice != 5) {
+        cout << "1-Enqueue 2-Dequeue 3-Peek 4-Display 5-Exit\n";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cout << "Element to enqueue: ";
+                cin >> data;
+                enqueue(q, n, data);
+                break;
+            case 2:
+                dequeue(q);
+                break;
+            case 3:
+                peek(q);
+                break;
+            case 4:
+                display(q);
+                break;
+            case 5:
+                return 0;
+            default:
+                cout << "Invalid!";
+        }
+    }
+}
+    
