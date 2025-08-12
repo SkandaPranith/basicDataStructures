@@ -1,0 +1,111 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+	int data;
+	struct node* next;
+};
+
+struct node* createnode(int data) {
+	struct node* newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->data = data;
+	newnode->next = NULL;
+	return newnode;
+}
+
+void push(struct node** head, int data) {
+	//Attach at end in LL
+	struct node* newnode = createnode(data);
+	if (*head == NULL) {
+	*head = newnode;
+		return;
+	}
+
+	struct node* temp = *head;
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+
+	temp->next = newnode;
+	cout << "Succesfully pushed " << newnode->data << " into stack.\n";
+}
+
+void pop(struct node** head) {
+	//Delete from end in LL
+	if (*head == NULL) {
+		cout << "Linked List is Empty.\n";
+		return;
+	}
+
+	struct node* temp = *head;
+	if(temp->next==NULL) {
+		free(temp);
+		*head = NULL;// Only 1 element in LL
+		return;
+	}
+
+	while (temp->next->next!=NULL){ 
+		temp = temp->next;
+	}
+
+	cout << "Popped " << temp->next->data << " from stack.\n";
+	free(temp->next);
+	temp->next = NULL;
+}
+
+void peek(struct node* head) {
+	struct node* temp = head;
+	if (head==NULL) {
+		cout << "Stack is empty.\n";
+		return;
+	}
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+	cout << "Top Element of Stack is: " << temp->data << endl;
+}
+
+void display(struct node* head) {
+	struct node* temp = head;
+	while (temp!= NULL) {
+		cout << temp->data << " ";
+		temp = temp->next;
+	}
+	cout << endl;
+}
+int main() {
+	struct node* head = NULL;
+	int choice, data;
+	while (choice != 5) {
+		cout << "1-Push, 2-Pop, 3-Peek, 4-Display, 5-Exit\n";
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+			cout << "Data: ";
+			cin >> data;
+			push(&head, data);
+			break;
+
+		case 2:
+			pop(&head);
+			break;
+
+		case 3:
+			peek(head);
+			break;
+
+		case 4:
+			display(head);
+			break;
+
+		case 5:
+			return 0;
+
+		default:
+			cout << "Invalid";
+
+		}
+	}
+}
